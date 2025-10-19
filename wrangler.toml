@@ -1,0 +1,19 @@
+name = "demo-do"
+compatibility_date = "2024-10-01"
+pages_build_output_dir = ".svelte-kit/cloudflare"
+main = "src/index.ts"
+
+# Durable Object binding
+[[durable_objects.bindings]]
+name = "AI_AGENT_DO"
+class_name = "AiAgent"
+script_name = "demo-do"
+
+# Migration to enable modern SQLite storage backend
+[[migrations]]
+tag = "v1"
+new_classes = ["AiAgent"]
+
+# Cloudflare Workers AI binding
+[ai]
+binding = "AI"
