@@ -1,5 +1,5 @@
 {
-    "name": "app",
+    "name": "demo-do",
     "main": ".svelte-kit/cloudflare/_worker.js",
     "compatibility_flags": [
         "nodejs_compat"
