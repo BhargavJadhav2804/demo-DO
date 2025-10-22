@@ -29,7 +29,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 		this.ctx.blockConcurrencyWhile(async () => {
 			// Initialize Durable Object state here.
-			 this.current = (await this.ctx.storage.get<number>("counter")) || 0;
+			this.current = (await this.ctx.storage.get<number>("counter")) || 0;
 		});
 	}
 
@@ -45,13 +45,40 @@ export class MyDurableObject extends DurableObject<Env> {
 	}
 
 	async fetch(request: Request): Promise<Response> {
-		console.log('Counter : ',this.current,'\n\n')
+		const webSocketPair = new WebSocketPair();
+		const [client, server] = Object.values(webSocketPair);
 
-		await this.ctx.storage.put("counter", this.current + 1)
+		this.ctx.acceptWebSocket(server);
 
-		console.log('Counter after put: ',this.current + 1,'\n\n')
-		
-		return new Response(`Hello from Durable Object! Url: ${request.url}, Id: ${new URL(request.url).searchParams.get("name")}, Count: ${this.current + 1}`);
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	}
+
+	async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
+		// Broadcast the message to all connected clients except the sender
+		const allWebSockets = this.ctx.getWebSockets();
+
+		allWebSockets.forEach((client) => {
+			// Skip the sender
+			if (client !== ws) {
+				client.send(message);
+			}
+		});
+
+		// Optionally log the broadcast
+		console.log(`Broadcasted message to ${allWebSockets.length - 1} clients`);
+	}
+
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean,
+	) {
+		// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
+		ws.close(code, "Durable Object is closing WebSocket");
 	}
 }
 
@@ -71,11 +98,11 @@ export default {
 		// Requests from all Workers to the Durable Object instance named "foo"
 		// will go to a single remote Durable Object instance.
 
-		console.log('inside worker fetch: ',request)
+		console.log('inside worker fetch: ', request)
 
 		let params = new URL(request.url).searchParams.get("name") || "foo";
 
-		let doId= env.MY_DURABLE_OBJECT.idFromName(params);
+		let doId = env.MY_DURABLE_OBJECT.idFromName(params);
 
 		console.log("\n\n ( From worker ) Durable Object ID:", doId.toString());
 
