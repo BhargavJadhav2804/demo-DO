@@ -1,0 +1,29 @@
+{
+    "name": "app",
+    "main": ".svelte-kit/cloudflare/_worker.js",
+    "compatibility_flags": [
+        "nodejs_compat"
+    ],
+    "compatibility_date": "2025-01-01",
+    "durable_objects": {
+        "bindings": [
+            {
+                "name": "MY_DURABLE_OBJECT",
+                "class_name": "MyDurableObject",
+                "script_name": "do-worker"
+            }
+        ],
+        "migrations": [
+            {
+                "tag": "v1",
+                "new_sqlite_classes": [
+                    "MyDurableObject"
+                ]
+            }
+        ]
+    },
+    "assets": {
+        "binding": "ASSETS",
+        "directory": ".svelte-kit/cloudflare"
+    }
+}
