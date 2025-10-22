@@ -1,0 +1,119 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                      AI AGENT CHAT INTERFACE                             ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│                                                                          │
+│                          🤖 AI Agent Chat                                │
+│                 Powered by SvelteKit & Cloudflare                       │
+│                        Durable Objects                                   │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│  ╔══════════════════════════════════════════════════════════════════╗   │
+│  ║                        CHAT MESSAGES                              ║   │
+│  ╠══════════════════════════════════════════════════════════════════╣   │
+│  ║                                                                   ║   │
+│  ║  👋 Hello! Start a conversation with the AI agent.              ║   │
+│  ║                                                                   ║   │
+│  ║  ┌──────────────────────────────────────────────────┐           ║   │
+│  ║  │ 👤 You                                           │           ║   │
+│  ║  │ ┌──────────────────────────────────────────────┐ │           ║   │
+│  ║  │ │ What is artificial intelligence?             │ │           ║   │
+│  ║  │ └──────────────────────────────────────────────┘ │           ║   │
+│  ║  └──────────────────────────────────────────────────┘           ║   │
+│  ║                                                                   ║   │
+│  ║           ┌──────────────────────────────────────────────────┐  ║   │
+│  ║           │ 🤖 Agent                                         │  ║   │
+│  ║           │ ┌──────────────────────────────────────────────┐ │  ║   │
+│  ║           │ │ Artificial intelligence (AI) is the          │ │  ║   │
+│  ║           │ │ simulation of human intelligence processes   │ │  ║   │
+│  ║           │ │ by machines, especially computer systems...  │ │  ║   │
+│  ║           │ └──────────────────────────────────────────────┘ │  ║   │
+│  ║           └──────────────────────────────────────────────────┘  ║   │
+│  ║                                                                   ║   │
+│  ║  ┌──────────────────────────────────────────────────┐           ║   │
+│  ║  │ 👤 You                                           │           ║   │
+│  ║  │ ┌──────────────────────────────────────────────┐ │           ║   │
+│  ║  │ │ Can you explain how you work?                │ │           ║   │
+│  ║  │ └──────────────────────────────────────────────┘ │           ║   │
+│  ║  └──────────────────────────────────────────────────┘           ║   │
+│  ║                                                                   ║   │
+│  ║           ┌──────────────────────────────────────────────────┐  ║   │
+│  ║           │ 🤖 Agent                                         │  ║   │
+│  ║           │ ┌──────────────────────────────────────────────┐ │  ║   │
+│  ║           │ │ Thinking...                                  │ │  ║   │
+│  ║           │ └──────────────────────────────────────────────┘ │  ║   │
+│  ║           └──────────────────────────────────────────────────┘  ║   │
+│  ║                                                                   ║   │
+│  ╚══════════════════════════════════════════════════════════════════╝   │
+│                                                                          │
+│  ┌────────────────────────────────────────────────────────────────────┐ │
+│  │  ┌──────────────────────────────────────────────────────────┐     │ │
+│  │  │ Type your message...                                     │     │ │
+│  │  │ (Press Enter to send, Shift+Enter for new line)         │     │ │
+│  │  │                                                          │     │ │
+│  │  └──────────────────────────────────────────────────────────┘     │ │
+│  │                                                                    │ │
+│  │  ┌───────────┐                                                    │ │
+│  │  │   Send    │                                                    │ │
+│  │  └───────────┘                                                    │ │
+│  └────────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                            UI FEATURES                                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+✅ Modern gradient background (purple/blue)
+✅ Clean white chat container with rounded corners
+✅ Distinct styling for user (right, gradient) vs agent (left, gray) messages
+✅ Loading indicator: "Thinking..." animation during AI processing
+✅ Message animations: Smooth slide-in effect for new messages
+✅ Responsive design: Works on mobile and desktop
+✅ Error handling: Red banner for errors
+✅ Keyboard shortcuts: Enter to send, Shift+Enter for new line
+✅ Auto-scroll: Messages scroll automatically
+✅ Empty state: Friendly welcome message
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                         COLOR SCHEME                                     ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Background: Linear gradient (#667eea → #764ba2)
+Container: White (#ffffff)
+User messages: Gradient (#667eea → #764ba2) with white text
+Agent messages: Light gray (#f0f0f0) with dark text
+Text: Dark (#333) and White (#fff)
+Accents: Purple (#667eea)
+Borders: Light gray (#e0e0e0)
+Error: Red (#c33) with light background (#fee)
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                        INTERACTION FLOW                                  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+1. User types message in textarea
+2. User clicks "Send" or presses Enter
+3. Message appears immediately as "You" message
+4. "Thinking..." indicator appears under Agent
+5. After AI response, "Thinking..." is replaced with actual message
+6. Textarea is cleared and ready for next message
+7. Chat history persists across page refreshes (via Durable Object)
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                       RESPONSIVE BEHAVIOR                                ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Desktop (>768px):
+  - Full width container (max 900px)
+  - Messages use 80% width
+  - Send button next to textarea
+
+Mobile (≤768px):
+  - Smaller padding
+  - Messages use 90% width
+  - Send button below textarea (full width)
+  - Smaller header text
+
